@@ -1,7 +1,14 @@
+import threading
+
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 
 from clubs.models import Club, Picture
+from src.camera_api.camera_connection import main
+
+t = threading.Thread(target=main)
+t.setDaemon(True)
+t.start()
 
 
 def index(request):
@@ -14,7 +21,6 @@ def index(request):
     }
 
     return render(request, 'clubs/index.html', context=context)
-    # return render(request, 'clubs/index.html')
 
 
 def show_club(request, club_id):
