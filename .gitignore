@@ -1,7 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
+db.sqlite3
 # C extensions
 *.so
 
@@ -87,3 +87,7 @@ target/
 
 # Mypy cache
 .mypy_cache/
+
+set.py
+photos
+best.pt
