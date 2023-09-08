@@ -1,0 +1,13 @@
+{% extends 'clubs/base.html' %}
+
+{% block content %}
+    <div class="posts">
+    {% for p in picture %}
+        <div class="post__item">
+            <p>камера: {{p.camera}}; {{p.time}}</p>
+            <img class="centered-image" src="{{p.photo.url}}" alt="">
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
+
