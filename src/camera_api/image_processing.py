@@ -3,7 +3,8 @@ import time
 import traceback
 from PIL import Image
 from django.core.files import File
-from club.models import Picture
+from clubs.models import Picture
+
 
 def save_image(image_content, camera):
     try:

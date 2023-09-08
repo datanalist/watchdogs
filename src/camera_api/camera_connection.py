@@ -1,12 +1,17 @@
 import traceback
 import requests
 from requests.auth import HTTPDigestAuth
-import set
 import time
-from club.models import *
-import image_detection
-import image_processing
+from clubs.models import *
+from .set import *
+from .image_detection import detect_dirty_places
+from .image_processing import save_image
+
 counter = [0]
+
+username = "test"
+password = "Rtest3"
+
 
 def main():
     global counter
@@ -28,8 +33,6 @@ def main():
 
             for index, camera in enumerate(cameras):
                 url = f"http://45.138.163.92:7502/cameras/{camera.ip}/image"
-                username = set.username
-                password = set.password
 
                 response = requests.get(url, auth=HTTPDigestAuth(username, password), params=params, headers=headers)
 
@@ -37,7 +40,7 @@ def main():
                     image_content = response.content
 
                     # Проверяем изображение на наличие грязных мест
-                    if image_detection.detect_dirty_places(image_content):
+                    if detect_dirty_places(image_content):
                         counter[index] += 1
                     else:
                         counter[index] = 0
@@ -45,13 +48,13 @@ def main():
                     if counter[index] == 3:
                         counter[index] = 0
                         # Сохраняем изображение и связываем его с камерой
-                        image_processing.save_image(image_content, camera)
+                        save_image(image_content, camera)
                 else:
                     print("Failed to access the image:", response.status_code)
             print(counter)
         except Exception as e:
             traceback.print_exc()
-        time.sleep(150)
+        time.sleep(40)
 
 
 if __name__ == "__main__":
