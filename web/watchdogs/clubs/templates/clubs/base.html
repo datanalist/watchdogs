@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
+    <title>{{title}}</title>
+    <link type="text/css" href="{% static 'club/css/reset.css' %}" rel="stylesheet"/>
+    <link type="text/css" href="{% static 'club/css/styles.css' %}" rel="stylesheet"/>
+</head>
+
+<body>
+<header class="header">
+    <div class="container header__inner">
+        <a class="logo" href="{% url 'home'%}">
+            <img class="logo__img" src="{% static 'club/images/logo.png' %}" alt="">
+        </a>
+        <a class="company__name" href="{% url 'home'%}">
+            CWP
+        </a>
+        <p class="yolo8">YOLOv8</p>
+    </div>
+</header>
+<div class="container main">
+    <div class="left__menu">
+        <ul class="left__menu-list">
+            {% for c in club %}
+            {% if c.pk == club_selected %}
+            <li class="left__menu-item selected">{{c.address}}</li>
+            {% else %}
+            <li class="left__menu-item"><a href="{{ c.get_absolute_url }}">{{c.address}}</a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% block content %}
+    {% endblock %}
+</div>
+
+
+</body>
+
+</html>
